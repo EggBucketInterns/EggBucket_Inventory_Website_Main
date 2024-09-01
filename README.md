@@ -5,7 +5,7 @@
 **Green** means frontend and backend done.
 
 ## Backend
-- **🚫 Excel sheet sync with database**
+- **🟢 Excel sheet sync with database**
 
 - **🟢 Need details of all the user (that has been added using name and contact no)**
 - **🟢 For schedule and stock info endpoint need the outlet name rather than phone number - done (NEED TO UPDATE APP AND TEST)**
