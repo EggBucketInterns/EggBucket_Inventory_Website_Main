@@ -10,13 +10,51 @@ export default function App() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [show, setshow] = useState(false);
+  const [show1, setshow1] = useState(false);
+  const [suggestionList, setsuggestionList] = useState([]);
+  const [myMap, setMyMap] = useState(new Map());
   // const location = useLocation();
   // const mobileNo = location.state?.mobileNo || "";
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("/fetchUsers");
+      
+      // Check if response.data contains the 'data' array
+      const users = response.data.data || []; 
+      
+      const map = new Map();
+      users.forEach((ele) => {
+        const key = ele.name[0];
+        const value = ele.name;
+  
+        if (!map.has(key)) {
+          map.set(key, []);
+        }
+        map.get(key).push(value);
+      });
+      
+      setMyMap(map);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    // Define the async function
+
+    fetchData();
+  },[]);
 
   const handleNameChange = (e) => {
-    setname(e.target.value);
-    console.log(e.target.value);
+    const inputValue = e.target.value;
+    setname(inputValue);
+    
+    if (inputValue && myMap.has(inputValue[0])) {
+      setsuggestionList(myMap.get(inputValue[0]));
+    } else {
+      setsuggestionList([]);
+    }
   };
 
   const handleDateChange = (e) => {
@@ -40,7 +78,7 @@ export default function App() {
       setvendordata(response.data);
     } catch (error) {
       window.alert(error.response.data.message);
-      console.error(error);
+
     }
   };
 
@@ -54,6 +92,14 @@ export default function App() {
     setSelectedImage(null);
   };
 
+  const handleOnMouseEnter = () => {
+    setshow1(true);
+  }
+  const handleOnMouseLeave = () => {
+    setshow1(false);
+  }
+
+
   // useEffect(() => {
   //   setname(mobileNo)
   // }, [])
@@ -63,8 +109,10 @@ export default function App() {
     <div className="container">
       <h2 id="heading1">Please Enter Name</h2>
       <form style={{ display: "flex" }} onSubmit={handleOnClick} id="mainform">
-        <div className="search">
+        <div className="search" style={{ display: "flex", flexDirection: "column" }}>
           <input
+            onMouseEnter={handleOnMouseEnter}
+            onFocus={handleOnMouseEnter}
             type="text"
             className="textNavbar"
             placeholder="Search Here"
@@ -72,7 +120,9 @@ export default function App() {
             required
             pattern="^[A-Za-z_]+$"
             value={name}
+
           />
+
         </div>
         <div className="search">
           <input
@@ -82,10 +132,35 @@ export default function App() {
             required
           />
         </div>
+        <div className="search" >
+          <button type="submit" form="mainform">Search</button>
+        </div>
+
       </form>
-      <div className="search" >
-        <button type="submit" form="mainform">Search</button>
-      </div>
+      {show1 && (<div id="suggestion" style={{ display: "inline-block", borderRadius: "1rem", position: "absolute" }} onMouseLeave={handleOnMouseLeave}
+        onMouseEnter={handleOnMouseEnter}>
+        {suggestionList.map((value, index) => (
+          <div
+            key={index}
+            className="search"
+            style={{ display: "flex", flexDirection: "column", borderRadius: "0.5rem" }}
+          >
+            <input
+              type="text"
+              className="textNavbar"
+              pattern="^[A-Za-z_]+$"
+              value={value}
+              disabled
+            />
+          </div>
+        ))}
+
+
+      </div>)}
+
+
+
+
 
       {show && (
         <div style={{ overflowX: "scroll" }}>

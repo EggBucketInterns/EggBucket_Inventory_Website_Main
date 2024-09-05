@@ -13,7 +13,8 @@ const { Sign_In_Handler,
     Delete_user,
     fetch_seven_days,
     fetch_thirty_days,
-    list_all_users
+    list_all_users,
+    update_user
 } = require(path.join(__dirname, ".", "Controllers", "Queries.js"))
 const { SetupSheet } = require(path.join(__dirname, ".", "Controllers", "SpreadSheet.js"))
 
@@ -30,6 +31,7 @@ router.route("/deleteUser").delete(Delete_user)//To delete user
 router.route("/verifyToken").get(Verify_User_Token)//To verify user
 router.route("/fetchUsers").get(list_all_users)//To fetch all active users
 router.route("/refreshSheet").post(SetupSheet)//To refresh excel sheet
+router.route("/updateUser").patch(update_user)//To update user
 module.exports = router
 
 // router.route("/userDocuments").get(Get_User_Documents)//To fetch user documents

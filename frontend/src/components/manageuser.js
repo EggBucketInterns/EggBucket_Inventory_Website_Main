@@ -3,9 +3,7 @@ import axios from "axios";
 
 export default function AddUser() {
     const [contactNo1, setcontactNo1] = useState("");
-    const [contactNo2, setcontactNo2] = useState("");
     const [name1, setname1] = useState("");
-    // const [name2, setname2] = useState("");
     const [Data, setData] = useState([]);
     const [show, setshow] = useState(false)
 
@@ -14,10 +12,6 @@ export default function AddUser() {
         console.log(e.target.value);
     };
 
-    const handleMobileChange2 = (e) => {
-        setcontactNo2(e.target.value);
-        console.log(e.target.value);
-    };
 
     const handleNameChange1 = (e) => {
         setname1(e.target.value);
@@ -43,7 +37,7 @@ export default function AddUser() {
             // window.alert(response.data.message);
             setcontactNo1("");
             setname1("");
-            if(show){
+            if (show) {
                 handleOnClick3();
             }
         } catch (error) {
@@ -55,16 +49,16 @@ export default function AddUser() {
     const handleOnClick2 = async (event) => {
 
         event.preventDefault();
+        const phoneNo = event.target.closest('tr').getElementsByTagName('td')[1].innerHTML;
         const submitData = {
-            phoneNo: `+91${contactNo2}`,
-            // name: name2,  can lead to deletion of data that is having same name as the data to be deleted
+            phoneNo: phoneNo,
+
         }
 
         try {
             const response = await axios.delete("/deleteUser", { data: submitData });
             // window.alert(response.data.message);
-            setcontactNo2("");
-            if(show){
+            if (show) {
                 handleOnClick3();
             }
 
@@ -87,7 +81,26 @@ export default function AddUser() {
         }
     };
 
-   
+    const handleOnClick4 = async (event) => {
+
+        const newvalue = window.prompt("Please Enter New Name");
+
+        if (newvalue && newvalue !== "") {
+            const td = event.target.closest("tr").getElementsByTagName('td');
+            td[0].textContent = newvalue;
+            const phoneNo = td[1].textContent.trim();
+
+            try {
+                const response = await axios.patch("/updateUser", { phone: phoneNo, newName: newvalue });
+                window.alert(response.data.message);
+            } catch (error) {
+                console.error(error.response.data.message);
+            }
+        } else {
+            console.log("No new name entered or user canceled.");
+        }
+    };
+
 
     return (
         <>
@@ -131,39 +144,8 @@ export default function AddUser() {
                 </form>
 
 
-                <h2 id="heading1" style={{ marginTop: "4rem" }}>Delete User</h2>
-                <form onSubmit={handleOnClick2} id="mainform2" style={{ display: "flex" }}>
-                    {/* <div className="search">
-                        <input
-                            type="tel"
-                            className="textNavbar"
-                            placeholder="Enter Name"
-                            onChange={handleNameChange2}
-                            required
-                            pattern="^[A-Za-z]+$"
-                            value={name2}
-                        />
 
-                    </div> */}
-                    <div className="search">
-                        <i className="fa fa-search" />
-                        <p style={{ fontSize: "1.5rem", fontWeight: "700" }}>+91</p>
-                        <input
-                            type="tel"
-                            className="textNavbar"
-                            placeholder="Enter Mobile Number"
-                            onChange={handleMobileChange2}
-                            required
-                            pattern="^[56789][0-9]{9}$"
-                            value={contactNo2}
-                        />
 
-                    </div>
-
-                    <div className="search" >
-                        <button type="submit" form="mainform2">Enter</button>
-                    </div>
-                </form>
 
                 <h2 id="heading1" style={{ marginTop: "2rem" }}>Show Details</h2>
                 <div className="search" >
@@ -186,8 +168,14 @@ export default function AddUser() {
                                     <tr key={userInf.phone}>
                                         <td>{userInf.name}</td>
                                         <td>{userInf.phone}</td>
+                                        <td><div style={{ display: "flex" }}>
+                                            <button id="delandedit" type="submit" onClick={handleOnClick4} style={{ color: "white", backgroundColor: "Green" }}>Edit</button>
+                                            <button id="delandedit" type="submit" onClick={handleOnClick2} style={{ color: "white", backgroundColor: "red" }}>Delete</button>
+                                        </div></td>
+
                                     </tr>
                                 ))}
+
                             </tbody>
                         </table>
                     </div>

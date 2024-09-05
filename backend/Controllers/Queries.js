@@ -478,6 +478,27 @@ const getAllOutlet = async () => {
     })
     return outletname
 }
+const update_user = async (req, res) => {
+
+    try {
+        const { phone, newName } = req.body
+        const cookie = req.cookies.session
+        const verify = await check_user(cookie)
+        if (verify == null) {
+            res.clearCookie('session')
+            res.status(401).json({ message: "Unauthorized access" }).end()
+            return
+        }
+        const db = getFirestore()
+        const path = db.collection("Employees").doc(phone)
+        await path.update({ name: newName })
+        res.status(200).json({ message: "User updated" }).end()
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({ message: "Server error" }).end()
+    }
+}
 module.exports = {
     Sign_In_Handler,
     Get_Complete_User_Info,
@@ -491,7 +512,10 @@ module.exports = {
     Create_new_user,
     Delete_user,
     fetch_seven_days,
-    fetch_thirty_days, getAllOutlet, getOutletData
+    fetch_thirty_days, 
+    getAllOutlet, 
+    getOutletData,
+     update_user
 }
 
 
