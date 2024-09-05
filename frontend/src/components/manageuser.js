@@ -92,7 +92,7 @@ export default function AddUser() {
 
             try {
                 const response = await axios.patch("/updateUser", { phone: phoneNo, newName: newvalue });
-                window.alert(response.data.message);
+                // window.alert(response.data.message);
             } catch (error) {
                 console.error(error.response.data.message);
             }
@@ -112,12 +112,12 @@ export default function AddUser() {
 
                     <div className="search">
                         <input
-                            type="tel"
+                            type="input"
                             className="textNavbar"
                             placeholder="Enter Name"
                             onChange={handleNameChange1}
                             required
-                            pattern="^[A-Za-z]+$"
+                            pattern="^[A-Za-z_]+$"
                             value={name1}
                         />
 

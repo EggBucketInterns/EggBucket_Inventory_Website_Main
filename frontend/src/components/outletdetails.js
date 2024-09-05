@@ -58,7 +58,7 @@ export default function App() {
   };
 
   const handleDateChange = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setSelectedDate(e.target.value);
   };
 
@@ -99,6 +99,11 @@ export default function App() {
     setshow1(false);
   }
 
+  const handleOnClickRecommendation=(e)=>{
+    // console.log(e.target.value);
+    setname(e.target.value);
+  }
+
 
   // useEffect(() => {
   //   setname(mobileNo)
@@ -120,6 +125,7 @@ export default function App() {
             required
             pattern="^[A-Za-z_]+$"
             value={name}
+            id="mainfield"
 
           />
 
@@ -147,20 +153,17 @@ export default function App() {
           >
             <input
               type="text"
+              onClick={handleOnClickRecommendation}
               className="textNavbar"
-              pattern="^[A-Za-z_]+$"
               value={value}
-              disabled
+              readOnly
+              style={{cursor:"pointer"}}
             />
           </div>
         ))}
 
 
       </div>)}
-
-
-
-
 
       {show && (
         <div style={{ overflowX: "scroll" }}>
