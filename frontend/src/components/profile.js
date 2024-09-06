@@ -22,10 +22,10 @@ export default function Profile(/*{ renderdata }*/) {
     setSelectedDate(e.target.value);
   }
   const handleOptionChange = (e) => {
-    if(e.target.value!== 'Set Date'){
+    if (e.target.value !== 'Set Date') {
       setshow1(false);
     }
-    else{
+    else {
       setshow1(true);
     }
     setoption(e.target.value);

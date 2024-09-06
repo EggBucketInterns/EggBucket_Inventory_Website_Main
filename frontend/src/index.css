@@ -28,7 +28,7 @@
 /* dashboard */
 
 #headdash {
-  
+
   color: white;
   background-color: #df6800e2;
   font-size: 2.5rem;
@@ -232,7 +232,7 @@ heading2 {
 .search {
   display: flex;
   align-items: center;
-  
+
 }
 
 .textNavbar {
@@ -405,6 +405,7 @@ heading2 {
   width: 10rem;
   font-size: 1.5rem;
 }
+
 #delandedit {
   border: none;
   padding: 0.5rem;
@@ -414,6 +415,7 @@ heading2 {
   border-radius: 0.5rem;
   margin-left: 1rem;
 }
+
 #delandedit:hover {
   opacity: 0.8;
   cursor: pointer;
@@ -439,6 +441,7 @@ heading2 {
   font-size: 1.3rem;
   margin-right: 1rem;
 }
+
 /*  */
 
 #bottomnav {
@@ -459,7 +462,7 @@ heading2 {
 .search {
   display: flex;
   align-items: center;
- 
+
 }
 
 .textNavbar {

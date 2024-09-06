@@ -19,21 +19,19 @@ export default function App() {
   const fetchData = async () => {
     try {
       const response = await axios.get("/fetchUsers");
-      
-      // Check if response.data contains the 'data' array
-      const users = response.data.data || []; 
-      
+      const users = response.data.data || [];
+
       const map = new Map();
       users.forEach((ele) => {
         const key = ele.name[0];
         const value = ele.name;
-  
+
         if (!map.has(key)) {
           map.set(key, []);
         }
         map.get(key).push(value);
       });
-      
+
       setMyMap(map);
     } catch (error) {
       console.error(error);
@@ -41,15 +39,13 @@ export default function App() {
   };
 
   useEffect(() => {
-    // Define the async function
-
     fetchData();
-  },[]);
+  }, []);
 
   const handleNameChange = (e) => {
     const inputValue = e.target.value;
     setname(inputValue);
-    
+
     if (inputValue && myMap.has(inputValue[0])) {
       setsuggestionList(myMap.get(inputValue[0]));
     } else {
@@ -99,7 +95,7 @@ export default function App() {
     setshow1(false);
   }
 
-  const handleOnClickRecommendation=(e)=>{
+  const handleOnClickRecommendation = (e) => {
     // console.log(e.target.value);
     setname(e.target.value);
   }
@@ -157,7 +153,7 @@ export default function App() {
               className="textNavbar"
               value={value}
               readOnly
-              style={{cursor:"pointer"}}
+              style={{ cursor: "pointer" }}
             />
           </div>
         ))}

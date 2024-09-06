@@ -41,8 +41,8 @@ export default function Verify_Vendor() {
       setshowcontent(true)
     }
     catch (error) {
-     
-window.alert(error.response.data.message)
+
+      window.alert(error.response.data.message)
       console.error(error.response.data.message);
     }
   };
@@ -97,10 +97,10 @@ window.alert(error.response.data.message)
       <h2 id="heading1">Please Enter Contact Number</h2>
       <div className="search">
         <i className="fa fa-search" />
-        <p style={{fontSize:"1.5rem",fontWeight:"700"}}>+91</p>
+        <p style={{ fontSize: "1.5rem", fontWeight: "700" }}>+91</p>
         <input type="tel" className="textNavbar" placeholder="Search Here" onChange={handleMobileChange} required pattern="^[56789][0-9]{9}$" />
-        <button type="submit" onClick={handleOnClick} 
-          >
+        <button type="submit" onClick={handleOnClick}
+        >
           Search
         </button>
       </div>

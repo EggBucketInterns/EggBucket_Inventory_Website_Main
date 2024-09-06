@@ -29,11 +29,11 @@ export default function DashHeader() {
 
   return (
     <div id="headdash">
-      <div style={{  borderRadius: "50%", backgroundColor: "white" }}>
-        <img src={process.env.PUBLIC_URL + "/logo.png"} height={47} width={60} style={{ zIndex: "2000",position:"relative",marginLeft:"-1rem" }} alt="Logo" ></img>
+      <div style={{ borderRadius: "50%", backgroundColor: "white" }}>
+        <img src={process.env.PUBLIC_URL + "/logo.png"} height={47} width={60} style={{ zIndex: "2000", position: "relative", marginLeft: "-1rem" }} alt="Logo" ></img>
       </div>
       <span>EGG-BUCKET</span>
-      <div style={{ marginLeft: "auto", borderRadius: "50%", display: "flex", justifyContent: "center", alignItems: "center",padding:"0.7rem" }}>
+      <div style={{ marginLeft: "auto", borderRadius: "50%", display: "flex", justifyContent: "center", alignItems: "center", padding: "0.7rem" }}>
         <button
           className="homedashbtn"
           style={{ cursor: "pointer" }}

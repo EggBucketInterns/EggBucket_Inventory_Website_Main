@@ -49,7 +49,7 @@ export default function Profile(/*{ renderdata }*/) {
       }
       else {
         const date = format(new Date(), 'yy-MM-dd');
-        response = await axios.get("/stockInfo", { params: {  date: `20${date}` } });
+        response = await axios.get("/stockInfo", { params: { date: `20${date}` } });
       }
 
       console.log(response.data)

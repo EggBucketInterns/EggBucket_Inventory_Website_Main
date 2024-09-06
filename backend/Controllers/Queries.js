@@ -512,10 +512,10 @@ module.exports = {
     Create_new_user,
     Delete_user,
     fetch_seven_days,
-    fetch_thirty_days, 
-    getAllOutlet, 
+    fetch_thirty_days,
+    getAllOutlet,
     getOutletData,
-     update_user
+    update_user
 }
 
 
