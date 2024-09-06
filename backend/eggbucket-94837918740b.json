@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "eggbucket",
+  "private_key_id": "94837918740bf06d23a12178b0fa541e41f97d47",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC+dFQIcy9BzaDR\nhHJRsiYCsA7bVAfKxxr8SB9lsWEgRKTugjJ5QaBQtbZigoXXXpei0lZREEGoVIb8\n+2+u5UdS5QOyC8pmG0ZbeVLwT/q1PW2M4m2GCamERE0sACsMKMUjtoxvjHFRZ5tn\n0vf6b1QDy62B5Q60TYRV7AuP+wzMcAmAwRwKGKU2ylS/s+RV38yp97ulBc8g16Sj\n0pfYb6XPtcprp/D9L83gzwpTtcWZQTcisVokRnSRapqfIcCSjIaQWNSflLZ+7F26\nNhOOnYrpB1KCOn0d96lujiVrQ9JMJsOjUlLUtL9JQqOt8D9+yZu4Z/yKEXZ5v392\nvTPIN0v/AgMBAAECggEASt/m7Y+DI6aYs+YTH4UfJm1a2eVWTuUp+cbM+SjcG1iB\nUvdCqqMfSLu3oVDZF4urp6pzntj6Rxg8HZcoGCUxfihk5Il4H95XMb0n2yxGTxyA\nRiP6lPiVeVd003iZc+VPY7Pv0CbxoeROl2m8bet4pyla5DdOKZpUDYeIICm9pV00\n53tU19pRUq+PNKhJnTIWf+gQPXhe+7NDKDiKVYClX81wJEauhWKXqyUS9J33JnIa\nIcpIiRawtY1hQjNbGEWhpchHixjDM96midMD2N6Kg/XFC4kak+JcBy7sOHp3PQtS\npX6OfPjw195D2nEd3wRetAVQXHZvp9aN/QMHLG6pEQKBgQDhZxj+ZnXqIo6eCD6w\nGAwinYooT8tOxeQzQa3NWaoSvI+6yjQbPTnLeIgjSHrOacgtVnT7xr+LoW5dibik\nB0mzJ0RBQ/CMZ18Y2WyRMO+v4p3q4iDtreTGpW8kyTdXiQHYcC7w3Nb/oI/2Flpq\n9GHpY77nDzxVOyVfCw1TkuAbOQKBgQDYTsCLif1GgqSPHqNLVnsbqpK29T23VIox\nVNUg/0sqKp6I/cd3y3SsJ+eJQuwTjGvT4FyoQWBNAAVkOb2DuQJIWkQ+v+HS8oWf\nzqiQmvXT7QCuAjnUx+2bZno159eQPR9Weunfn4BfUmIZqJYEEqyilA0+mNdVn8sk\neAmJO/1I9wKBgQDE8h9Nkdsvs/gnLw8PMEPSLxLbfDUpZBGrk5S4G8NV0bpIPItg\nzZNlLLDPG3JqTtVgf+2BXLxa1beoNUDG2bNUvVePKzzQgTX/cWLCTh7v8LOI2wJo\nioud4kkFvGcFrimVoxfwzxVwkCuZmxhv4Y53rfbMz2wpEJ/rtq1zO59jSQKBgQCD\ne9Nkvrs7Shx3dtsx516r4ZKPLiGWuAfMltF63lQ1THTTtteyBPVl1FfUwt43v8qn\nnyETkbHU/GdKliKR2Dr/+gaz0fWWQZ9iFb+3LsqxSMZ5/5ZhtinDpZYyADyzS8Qp\n0EsriIwC5VQGXsjZrvRLWw11+Hgkbx6Pi3vYdKOw3wKBgQDdL4HEWpNSCpfUFrFT\nwqcoAHwWUv5EpCxqOVeJgGpPXwPRLkCocJjT3hITSqIgSM3Vy9vJ2eI5MoriiqIM\nHPjKrCoKYx7kLz3TeZjLK9HkvaEYQ2x2wvPthL/EtlbbLq2seMZqvlPsQeig465y\n0ipEyXEB1RKFzWyFdbKf5i0udg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "eggbucket@eggbucket.iam.gserviceaccount.com",
+  "client_id": "110563795091843237480",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/eggbucket%40eggbucket.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
