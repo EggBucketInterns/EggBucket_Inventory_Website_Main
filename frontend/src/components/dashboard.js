@@ -38,9 +38,9 @@ export default function Dashboard() {
 
 
 // for dev only frontend comment only below useEffect
-  // useEffect(() => {
-  //   checkToken();
-  // }, []);
+  useEffect(() => {
+    checkToken();
+  }, []);
 
 
 
