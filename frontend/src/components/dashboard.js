@@ -18,7 +18,6 @@ import AddUser from "./manageuser.js";
 export default function Dashboard() {
   const location = useLocation();
   const navigate = useNavigate();
-  // to capture the id of the previous button
   const [curButton, setCurButton] = useState("btn1");
 
 
@@ -38,10 +37,12 @@ export default function Dashboard() {
 
 
 
+// for dev only frontend comment only below useEffect
+  // useEffect(() => {
+  //   checkToken();
+  // }, []);
 
-  useEffect(() => {
-    checkToken();
-  }, []);
+
 
   useEffect(() => {
 
