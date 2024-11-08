@@ -6,6 +6,7 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "date-fns": "^3.6.0",
+    "dotenv": "^16.4.5",
     "exceljs": "^4.4.0",
     "express": "^4.19.2",
     "firebase": "^10.12.2",
@@ -15,7 +16,7 @@
     "xlsx": "^0.18.5"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node server.js"
   },
   "eslintConfig": {
     "extends": [

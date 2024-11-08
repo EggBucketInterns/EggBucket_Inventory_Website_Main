@@ -7,7 +7,7 @@ const { format } = require('date-fns');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    storageBucket: "scannerapp-4448f.appspot.com"
+    storageBucket: "eb-workplace.appspot.com"
 })
 
 //Signing in(post)
@@ -207,7 +207,8 @@ const Get_Stock_Info = async (req, res) => {
                     morning_money_collected: doc.data().morning_money_collected,
                     evening_opening_stock: doc.data().evening_opening_stock,
                     evening_closing_stock: doc.data().evening_closing_stock,
-                    evening_money_collected: doc.data().evening_money_collected
+                    evening_money_collected: doc.data().evening_money_collected,
+                    purchasedStock: doc.data().purchased_stock
                 }
 
             }
@@ -270,7 +271,7 @@ const fetch_seven_days = async (req, res) => {
         const db = getFirestore()
         const collections = await db.listCollections()
 
-        if (collections.length < 8) {
+        if (collections.length < 1) {
             res.status(400).json({ message: "Not enough data" }).end()
             return
         }
@@ -320,7 +321,7 @@ const fetch_thirty_days = async (req, res) => {
         const db = getFirestore();
         const collections = await db.listCollections();
 
-        if (collections.length < 10) {
+        if (collections.length < 1) {
             res.status(400).json({ message: "Not enough data" }).end();
             return;
         }

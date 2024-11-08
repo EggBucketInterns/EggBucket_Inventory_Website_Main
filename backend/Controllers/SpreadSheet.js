@@ -22,7 +22,7 @@ async function authSheets() {
 const SetupSheet = async (req, res) => {
   try {
     const { sheets } = await authSheets();
-    const spreadsheetId = "1_FQT28T2pwdSu2tFXZE9oXOP7juDNDhK8ILtgz5alhc";
+    const spreadsheetId = "1eCyfbCmFoerH7VZK6QIf9W-vGtaS5QwMl5DTUlrQryY";
 
 
     let [outlets, closingStockData] = await Promise.all([getAllOutlet(), getOutletData()]);

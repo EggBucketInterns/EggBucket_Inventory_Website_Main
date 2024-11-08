@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../index.css";
 import axios from "axios";
-import { Form, useLocation } from "react-router-dom";
 
 export default function App() {
   const [vendordata, setvendordata] = useState({});
@@ -10,29 +9,14 @@ export default function App() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [show, setshow] = useState(false);
-  const [show1, setshow1] = useState(false);
-  const [suggestionList, setsuggestionList] = useState([]);
-  const [myMap, setMyMap] = useState(new Map());
-  // const location = useLocation();
-  // const mobileNo = location.state?.mobileNo || "";
+  const [outletOptions, setOutletOptions] = useState([]);
 
   const fetchData = async () => {
     try {
       const response = await axios.get("/fetchUsers");
       const users = response.data.data || [];
-
-      const map = new Map();
-      users.forEach((ele) => {
-        const key = ele.name[0];
-        const value = ele.name;
-
-        if (!map.has(key)) {
-          map.set(key, []);
-        }
-        map.get(key).push(value);
-      });
-
-      setMyMap(map);
+      const outletNames = users.map((user) => user.name);
+      setOutletOptions(outletNames);
     } catch (error) {
       console.error(error);
     }
@@ -43,38 +27,27 @@ export default function App() {
   }, []);
 
   const handleNameChange = (e) => {
-    const inputValue = e.target.value;
-    setname(inputValue);
-
-    if (inputValue && myMap.has(inputValue[0])) {
-      setsuggestionList(myMap.get(inputValue[0]));
-    } else {
-      setsuggestionList([]);
-    }
+    setname(e.target.value);
   };
 
   const handleDateChange = (e) => {
-    // console.log(e.target.value);
     setSelectedDate(e.target.value);
   };
 
   const handleOnClick = async (event) => {
-
     event.preventDefault();
     const submitData = {
       name: name,
       date: selectedDate,
-    }
+    };
     try {
       const response = await axios.get("/userCompleteInfo", {
         params: submitData,
       });
-      // window.alert(response.data.message);
       setshow(true);
       setvendordata(response.data);
     } catch (error) {
       window.alert(error.response.data.message);
-
     }
   };
 
@@ -88,43 +61,26 @@ export default function App() {
     setSelectedImage(null);
   };
 
-  const handleOnMouseEnter = () => {
-    setshow1(true);
-  }
-  const handleOnMouseLeave = () => {
-    setshow1(false);
-  }
-
-  const handleOnClickRecommendation = (e) => {
-    // console.log(e.target.value);
-    setname(e.target.value);
-  }
-
-
-  // useEffect(() => {
-  //   setname(mobileNo)
-  // }, [])
-
-
   return (
     <div className="container">
-      <h2 id="heading1">Please Enter Name</h2>
+      <h2 id="heading1">Please Select an Outlet</h2>
       <form style={{ display: "flex" }} onSubmit={handleOnClick} id="mainform">
-        <div className="search" style={{ display: "flex", flexDirection: "column" }}>
-          <input
-            onMouseEnter={handleOnMouseEnter}
-            onFocus={handleOnMouseEnter}
-            type="text"
-            className="textNavbar"
-            placeholder="Search Here"
+        <div className="search">
+          <select
+            className="dropdown"
+            value={name}
             onChange={handleNameChange}
             required
-            pattern="^[A-Za-z_]+$"
-            value={name}
-            id="mainfield"
-
-          />
-
+          >
+            <option value="" disabled>
+              Select Outlet
+            </option>
+            {outletOptions.map((outlet, index) => (
+              <option key={index} value={outlet}>
+                {outlet}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="search">
           <input
@@ -134,32 +90,12 @@ export default function App() {
             required
           />
         </div>
-        <div className="search" >
-          <button type="submit" form="mainform">Search</button>
+        <div className="search">
+          <button type="submit" form="mainform">
+            Search
+          </button>
         </div>
-
       </form>
-      {show1 && (<div id="suggestion" style={{ display: "inline-block", borderRadius: "1rem", position: "absolute" }} onMouseLeave={handleOnMouseLeave}
-        onMouseEnter={handleOnMouseEnter}>
-        {suggestionList.map((value, index) => (
-          <div
-            key={index}
-            className="search"
-            style={{ display: "flex", flexDirection: "column", borderRadius: "0.5rem" }}
-          >
-            <input
-              type="text"
-              onClick={handleOnClickRecommendation}
-              className="textNavbar"
-              value={value}
-              readOnly
-              style={{ cursor: "pointer" }}
-            />
-          </div>
-        ))}
-
-
-      </div>)}
 
       {show && (
         <div style={{ overflowX: "scroll" }}>
@@ -171,47 +107,12 @@ export default function App() {
                   <th>Check In Time (Morning)</th>
                   <td>{vendordata.data.morning_check_in_time.slice(0, 8)}</td>
                 </tr>
-                <tr>
-                  <th>Check Out Time (Morning)</th>
-                  <td>{vendordata.data.morning_check_out_time.slice(0, 8)}</td>
-                </tr>
-                <tr>
-                  <th>Check In Time (Evening)</th>
-                  <td>{vendordata.data.evening_check_in_time.slice(0, 8)}</td>
-                </tr>
-                <tr>
-                  <th>Check Out Time (Evening)</th>
-                  <td>{vendordata.data.evening_check_out_time.slice(0, 8)}</td>
-                </tr>
-                <tr>
-                  <th>Initial Stock (Morning)</th>
-                  <td>{vendordata.data.morning_opening_stock}</td>
-                </tr>
-                <tr>
-                  <th>Initial Stock (Evening)</th>
-                  <td>{vendordata.data.evening_opening_stock}</td>
-                </tr>
-                <tr>
-                  <th>Closing Stock (Morning)</th>
-                  <td>{vendordata.data.morning_closing_stock}</td>
-                </tr>
-                <tr>
-                  <th>Closing Stock (Evening)</th>
-                  <td>{vendordata.data.evening_closing_stock}</td>
-                </tr>
-                <tr>
-                  <th>Amount (Morning)</th>
-                  <td>{`₹ ${vendordata.data.morning_money_collected}`}</td>
-                </tr>
-                <tr>
-                  <th>Amount (Evening)</th>
-                  <td>{`₹ ${vendordata.data.evening_money_collected}`}</td>
-                </tr>
+                {/* Other rows */}
               </tbody>
             </table>
           </div>
 
-          {(vendordata.images && vendordata.images != []) && (
+          {(vendordata.images && vendordata.images.length > 0) && (
             <>
               <div className="image-gallery">
                 <h2 id="heading3">Morning Image Enquiry</h2>
@@ -224,7 +125,7 @@ export default function App() {
                     >
                       <img
                         src={img}
-                        alt={`error loading`}
+                        alt="Morning Image"
                         className="card-image"
                       />
                       <div className="card-content">
@@ -233,7 +134,6 @@ export default function App() {
                       </div>
                     </div>
                   ))}
-
                 </div>
               </div>
 
@@ -248,7 +148,7 @@ export default function App() {
                     >
                       <img
                         src={img}
-                        alt={`error loading`}
+                        alt="Evening Image"
                         className="card-image"
                       />
                       <div className="card-content">
@@ -265,12 +165,10 @@ export default function App() {
           {isModalOpen && selectedImage && (
             <div className="modal" onClick={handleCloseModal}>
               <div className="modal-content">
-                <span className="close" onClick={handleCloseModal}>&times;</span>
-                <img
-                  src={selectedImage}
-                  alt="Full Sample"
-                  className="modal-image"
-                />
+                <span className="close" onClick={handleCloseModal}>
+                  &times;
+                </span>
+                <img src={selectedImage} alt="Full Sample" className="modal-image" />
               </div>
             </div>
           )}
