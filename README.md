@@ -3,6 +3,7 @@
 <h4>cd frontend</h4>
 <h4>npm install</h4>
 <h4>npm run build</h4>
+<h5>Copy the build folder over to the backend folder</h5>
 <h4>cd ..</h4>
 <h3>Backend</h3>
 <h4>cd backend</h4>
