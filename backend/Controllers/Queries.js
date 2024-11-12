@@ -456,15 +456,29 @@ const getOutletData = async () => {
     for (const collection of collections) {
         const tempDate = [];
         const snapshot = await collection.get();
+        
         snapshot.forEach(doc => {
-            tempDate.push({ name: doc.data().name, eveningStock: doc.data().evening_closing_stock })
-            // console.log(tempDate)
+            const data = doc.data();
+            tempDate.push({ 
+                name: data.name,
+                morning_opening_stock: data.morning_opening_stock || null,
+                morning_closing_stock: data.morning_closing_stock || null,
+                evening_opening_stock: data.evening_opening_stock || null,
+                evening_closing_stock: data.evening_closing_stock || null,
+                purchasedStock: data.purchased_stock || null  // assuming the field name is purchased_stock
+            });
         });
-        DateData.push({ date: collection.id, data: tempDate });
+        
+        if (tempDate.length > 0) {  // Only add dates that have data
+            DateData.push({ 
+                date: collection.id, 
+                data: tempDate 
+            });
+        }
     }
-    DateData.pop();
-    return DateData
-    // console.log(DateData)
+    
+    DateData.pop();  // Keeping this if you still need to remove the last entry
+    return DateData;
 }
 
 //get names of all outlet for spreadsheet
