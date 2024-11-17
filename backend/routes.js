@@ -1,11 +1,13 @@
 const express = require("express")
 const router = express.Router()
 const path = require("path")
+
 const { Sign_In_Handler,
     Get_Complete_User_Info,
     Verification_handler,
     Get_Timing_Info,
     Get_Stock_Info,
+    Get_Custom_Date_Interval,
     // Get_User_Documents,
     Verify_User_Token,
     Logout_Handler,
@@ -32,6 +34,7 @@ router.route("/verifyToken").get(Verify_User_Token)//To verify user
 router.route("/fetchUsers").get(list_all_users)//To fetch all active users
 router.route("/refreshSheet").post(SetupSheet)//To refresh excel sheet
 router.route("/updateUser").patch(update_user)//To update user
+router.route("/customDateInterval").get(Get_Custom_Date_Interval); // New route for custom date interval
 module.exports = router
 
 // router.route("/userDocuments").get(Get_User_Documents)//To fetch user documents
