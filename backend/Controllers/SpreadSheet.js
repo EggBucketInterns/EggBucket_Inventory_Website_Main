@@ -1,11 +1,13 @@
+require('dotenv').config();
 const { google } = require("googleapis");
 const { getAllOutlet, getOutletData } = require("./Queries.js");
 const path = require("path");
+const credentials = require('../eggbucket-94837918740b.js');
 
 async function authSheets() {
   try {
     const auth = new google.auth.GoogleAuth({
-      keyFile: path.join(__dirname, "..", "eggbucket-94837918740b.json"),
+      credentials,
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
 
@@ -50,25 +52,22 @@ async function ensureSheetExists(sheets, spreadsheetId, sheetTitle) {
 const SetupSheet = async (req, res) => {
   try {
     const { sheets } = await authSheets();
-    const spreadsheetId = "1eCyfbCmFoerH7VZK6QIf9W-vGtaS5QwMl5DTUlrQryY";
+    const spreadsheetId = process.env.GOOGLE_SPREADSHEET_ID;
 
     // Fetch outlet names from Firestore, ensure they are unique and trimmed
     let outlets = await getAllOutlet();
-    outlets = [...new Set(outlets.map((outlet) => outlet.trim()))]; // Remove duplicates and trim names
+    outlets = [...new Set(outlets.map((outlet) => outlet.trim()))];
     outlets.sort();
 
     let stockData = await getOutletData();
 
     for (const outlet of outlets) {
-      // Check if the sheet for the outlet exists or create it if necessary
       await ensureSheetExists(sheets, spreadsheetId, outlet);
 
-      // Prepare header rows for each outlet
       const values = [
         ["Date", "Morning Opening Stock", "Morning Closing Stock", "Evening Opening Stock", "Evening Closing Stock", "Purchased Stock"],
       ];
 
-      // Add data rows for each outlet
       stockData.forEach((entry) => {
         const outletData = entry.data.find((item) => item.name === outlet) || {};
         values.push([
@@ -81,12 +80,10 @@ const SetupSheet = async (req, res) => {
         ]);
       });
 
-      // Sort data rows by date (excluding headers)
       const headers = values.slice(0, 1);
       const dataRows = values.slice(1).sort((a, b) => new Date(b[0]) - new Date(a[0]));
       const sortedValues = [...headers, ...dataRows];
 
-      // Update the specific outlet sheet
       console.log(`Updating sheet: ${outlet} with data`);
       await sheets.spreadsheets.values.update({
         spreadsheetId,

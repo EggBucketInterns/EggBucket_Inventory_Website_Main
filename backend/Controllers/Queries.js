@@ -2,8 +2,10 @@ const { getAuth, signInWithEmailAndPassword, } = require("firebase/auth")
 const admin = require("firebase-admin")
 const path = require("path")
 const { getFirestore } = require("firebase-admin/firestore")
-const serviceAccount = require(path.join(__dirname, "..", "AdminKey.json"))
+// const serviceAccount = require(path.join(__dirname, "..", "AdminKey.json"))
+const serviceAccount = require("../AdminKey");
 const { format } = require('date-fns');
+// console.log(serviceAccount);
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),

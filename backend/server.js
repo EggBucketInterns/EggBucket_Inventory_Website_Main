@@ -14,6 +14,9 @@ const firebaseConfig = {
   measurementId: "G-789F43P0MN"
 };
 
+const dotenv = require("dotenv");
+dotenv.config({ path: "./.env" });
+// console.log(process.env);
 
 const app = express()
 const cloud = initializeApp(firebaseConfig);
