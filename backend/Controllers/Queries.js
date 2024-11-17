@@ -2,10 +2,8 @@ const { getAuth, signInWithEmailAndPassword, } = require("firebase/auth")
 const admin = require("firebase-admin")
 const path = require("path")
 const { getFirestore } = require("firebase-admin/firestore")
-// const serviceAccount = require(path.join(__dirname, "..", "AdminKey.json"))
 const serviceAccount = require("../AdminKey");
 const { format } = require('date-fns');
-// console.log(serviceAccount);
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -257,6 +255,85 @@ const check_user = async (cookie) => {
         return null
     }
 };
+
+//Custom date interval data
+const Get_Custom_Date_Interval = async (req, res) => {
+    try {
+        // 1. User Authentication and Authorization
+        const cookie = req.cookies.session;
+        const verify = await check_user(cookie);
+        if (verify == null) {
+            res.clearCookie('session');
+            res.status(401).json({ message: "Unauthorized access" }).end();
+            return;
+        }
+
+        // 2. Parse the custom date interval from query parameters
+        const { startDate, endDate } = req.query;
+
+        if (!startDate || !endDate) {
+            res.status(400).json({ message: "Start date and end date are required" }).end();
+            return;
+        }
+
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        if (isNaN(start) || isNaN(end)) {
+            res.status(400).json({ message: "Invalid date format" }).end();
+            return;
+        }
+
+        // 3. Fetch collections from Firestore
+        const db = getFirestore();
+        const collections = await db.listCollections();
+
+        if (collections.length < 1) {
+            res.status(400).json({ message: "Not enough data" }).end();
+            return;
+        }
+
+        // 4. Filter collections based on the custom date interval
+        const collectionIds = [];
+        for (let i = collections.length - 1; i >= 0; i--) {
+            const collectionId = collections[i]._queryOptions.collectionId;
+            const collectionDate = new Date(collectionId); // Assuming collectionId is in date format
+
+            if (collectionDate >= start && collectionDate <= end) {
+                collectionIds.push(collectionId);
+            }
+        }
+
+        if (collectionIds.length === 0) {
+            res.status(404).json({ message: "No data found within the provided date range" }).end();
+            return;
+        }
+
+        // 5. Fetch data from the filtered collections in parallel
+        const dataPromises = collectionIds.map(async (collectionId) => {
+            const ref = await db.collection(collectionId).get();
+            let currDay = [];
+            ref.forEach((doc) => {
+                let currObj = {
+                    phoneNo: doc.id,
+                    date: collectionId,
+                    data: doc.data()
+                };
+                currDay.push(currObj);
+            });
+            return currDay;
+        });
+
+        const respObj = await Promise.all(dataPromises);
+
+        // 6. Return the fetched data
+        res.status(200).send({ message: "Successfully fetched data", data: respObj }).end();
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Internal server error" }).end();
+    }
+};
+
 
 //7 Day data
 const fetch_seven_days = async (req, res) => {
@@ -520,6 +597,7 @@ module.exports = {
     Sign_In_Handler,
     Get_Complete_User_Info,
     Get_Timing_Info,
+    Get_Custom_Date_Interval,
     // Verification_handler,
     Get_Stock_Info,
     // Get_User_Documents,
