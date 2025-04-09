@@ -440,7 +440,6 @@ const fetch_thirty_days = async (req, res) => {
 const Create_new_user = async (req, res) => {
     try {
         const { phoneNo, name } = req.body;
-        console.log("phone num: ", phoneNo, name)
         const cookie = req.cookies.session
         const verify = await check_user(cookie)
         if (verify == null) {
@@ -448,27 +447,26 @@ const Create_new_user = async (req, res) => {
             res.status(401).json({ message: "Unauthorized access" }).end()
             return
         }
-        console.log("user verified");
-        const auth = admin.auth()
-        var resp = await auth.createUser({
-            phoneNumber: phoneNo
-        })
-        console.log("user created_1")
-        const uid = resp.uid
-        if (resp === null) {
-            res.status(424).send({ message: "User creation failed" }).end()
-            return
-        }
-        console.log("user response get");
+        // console.log("user verified");
+        // const auth = admin.auth()
+        // var resp = await auth.createUser({
+        //     phoneNumber: phoneNo
+        // })
+        // console.log("user created_1", resp)
+        // const uid = resp.uid
+        // if (resp === null) {
+        //     res.status(424).send({ message: "User creation failed" }).end()
+        //     return
+        // }
+        // console.log("user response get");
         const db = getFirestore()
         const ref = db.collection("Employees").doc(phoneNo)
-        resp = await ref.set({
+        var resp = await ref.set({
             is_Verified: true,
             name: name,
             uid: uid,
             time_created: Date()
         })
-        console.log("successful creation: ", resp);
         if (resp === null) {
             res.status(424).send({ message: "User creation failed" }).end()
             return
@@ -477,7 +475,7 @@ const Create_new_user = async (req, res) => {
     }
     catch (err) {
         console.log(err)
-        res.status(500).send({ message: "Internal server error" }).end()
+        res.status(500).send({ message: "Internal server error: user already exist" }).end()
     }
 }
 //To delete user
