@@ -440,6 +440,7 @@ const fetch_thirty_days = async (req, res) => {
 const Create_new_user = async (req, res) => {
     try {
         const { phoneNo, name } = req.body;
+        console.log("phone num: ", phoneNo, name)
         const cookie = req.cookies.session
         const verify = await check_user(cookie)
         if (verify == null) {
