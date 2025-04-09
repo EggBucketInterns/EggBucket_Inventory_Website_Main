@@ -447,18 +447,15 @@ const Create_new_user = async (req, res) => {
             res.status(401).json({ message: "Unauthorized access" }).end()
             return
         }
-        // console.log("user verified");
-        // const auth = admin.auth()
-        // var resp = await auth.createUser({
-        //     phoneNumber: phoneNo
-        // })
-        // console.log("user created_1", resp)
-        // const uid = resp.uid
-        // if (resp === null) {
-        //     res.status(424).send({ message: "User creation failed" }).end()
-        //     return
-        // }
-        // console.log("user response get");
+        const auth = admin.auth()
+        var resp = await auth.createUser({
+            phoneNumber: phoneNo
+        })
+        const uid = resp.uid
+        if (resp === null) {
+            res.status(424).send({ message: "User creation failed" }).end()
+            return
+        }
         const db = getFirestore()
         const ref = db.collection("Employees").doc(phoneNo)
         var resp = await ref.set({
